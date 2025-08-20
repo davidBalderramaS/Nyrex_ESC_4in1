@@ -26,10 +26,7 @@
 #include "Utils/Utils.h"
 #include "Communication/SPI_Config.h"
 
-/*
- *  Nyrex Branch
- *  Slave
- */
+
 
 int main(void){
 	LED_PA10_Init();
