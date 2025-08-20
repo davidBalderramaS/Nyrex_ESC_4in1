@@ -1,0 +1,6 @@
+../Drivers/CMSIS/Include/core_cm4.h:1679:22:__NVIC_EnableIRQ	2
+../Drivers/CMSIS/Include/core_cm4.h:1809:22:__NVIC_SetPriority	2
+../Core/Sensor_Handling/ADC.c:26:6:ADC_Poten_PA7_Init	4
+../Core/Sensor_Handling/ADC.c:91:6:ADC1_2_IRQHandler	2
+../Core/Sensor_Handling/ADC.c:104:10:ADC_Truncate	1
+../Core/Sensor_Handling/ADC.c:116:10:Duty_Cycle_Percent	1

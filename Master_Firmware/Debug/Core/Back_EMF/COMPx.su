@@ -1,0 +1,15 @@
+../Drivers/CMSIS/Include/core_cm4.h:1679:22:__NVIC_EnableIRQ	16	static,ignoring_inline_asm
+../Drivers/CMSIS/Include/core_cm4.h:1717:22:__NVIC_DisableIRQ	16	static,ignoring_inline_asm
+../Drivers/CMSIS/Include/core_cm4.h:1809:22:__NVIC_SetPriority	16	static
+../Core/Back_EMF/COMPx.c:23:6:COMP1_Init	4	static
+../Core/Back_EMF/COMPx.c:53:6:COMP3_Init_v2	4	static
+../Core/Back_EMF/COMPx.c:83:6:COMP4_Init_v2	4	static
+../Core/Back_EMF/COMPx.c:114:6:Enable_COMP1_Interrupt	8	static
+../Core/Back_EMF/COMPx.c:132:6:Enable_COMP3_Interrupt	8	static
+../Core/Back_EMF/COMPx.c:152:6:Enable_COMP4_Interrupt	8	static
+../Core/Back_EMF/COMPx.c:163:6:Disable_All_COMP_Interrupts	8	static
+../Core/Back_EMF/COMPx.c:169:6:COMP1_2_3_IRQHandler	8	static
+../Core/Back_EMF/COMPx.c:215:6:COMP4_IRQHandler	8	static
+../Core/Back_EMF/COMPx.c:241:6:COMP2_Init	4	static
+../Core/Back_EMF/COMPx.c:272:6:COMP2_Init_v2	4	static
+../Core/Back_EMF/COMPx.c:302:6:COMP3_Init	4	static

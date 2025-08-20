@@ -1,0 +1,2 @@
+../Core/Utils/Utils.c:12:6:LED_PA10_Init	1
+../Core/Utils/Utils.c:27:6:Delay_Brute	2

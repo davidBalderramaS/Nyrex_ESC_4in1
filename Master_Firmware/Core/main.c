@@ -27,7 +27,7 @@
 #include "Communication/SPI_Config.h"
 
 /*
- *  Branch
+ *       Master
  */
 
 int main(void){
@@ -47,7 +47,7 @@ int main(void){
 	PWM_PC2_TIM1_CH3_Init();  // M3H
 	PWM_PC3_TIM1_CH4_Init();  // M3L
 
-	SPI2_Slave_Init();
+	SPI2_Master_Init();
 
 	// Ensure global interrupts are enabled
 	if (__get_PRIMASK() & 1){
@@ -55,10 +55,19 @@ int main(void){
 	}
 
 	while (1){
-		// Send and receive data
-		SPI2_Slave_TX_RX();
-		//printf("Read from Master: %u \r\n", Read_Master_Value);
-		Delay_mS(50);
+		// Active LED
+		GPIOA->ODR ^= LED_PA10;
+
+		// Send SPI data
+		GPIOB->ODR &= ~SPI2_PB12_MASTER_CS; // Enable CS for slave1
+		Delay_mS(1);
+
+		Read_Slave_Value = SPI2_TX_RX(99); // Send (Max is 8 bits right now), store read value
+		//Delay_mS(1); // Hold time
+
+		GPIOB->ODR |= SPI2_PB12_MASTER_CS;  // Disable  CS
+		printf("Read from Slave: %u \r\n", Read_Slave_Value);
+		Delay_mS(100);
 	}
 }
 

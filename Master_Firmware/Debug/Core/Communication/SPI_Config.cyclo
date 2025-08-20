@@ -1,0 +1,2 @@
+../Core/Communication/SPI_Config.c:24:6:SPI2_Master_Init	1
+../Core/Communication/SPI_Config.c:58:9:SPI2_TX_RX	5
