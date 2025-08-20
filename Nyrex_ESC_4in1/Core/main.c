@@ -6,8 +6,8 @@
  * Enjoy :^)
  *
  * Author: David Balderrama S.
- * Start Date: 6/27/2025
- * End date: 8/14/2025
+ * Start Date: 8/17/2025
+ * End date: ?
  *
  */
 
@@ -24,7 +24,12 @@
 #include "ESC_Control/COMP_Loop_Config.h"
 #include "Utils/Delay_Timer.h"
 #include "Utils/Utils.h"
+#include "Communication/SPI_Config.h"
 
+/*
+ *  Nyrex Branch
+ *  Slave
+ */
 
 int main(void){
 	LED_PA10_Init();
@@ -43,13 +48,26 @@ int main(void){
 	PWM_PC2_TIM1_CH3_Init();  // M3H
 	PWM_PC3_TIM1_CH4_Init();  // M3L
 
+	SPI2_Slave_Init();
+
 	// Ensure global interrupts are enabled
 	if (__get_PRIMASK() & 1){
 		__enable_irq();
 	}
 
 	while (1){
-		if (toggle_State == 0){
+		// Send and receive data
+		SPI2_Slave_TX_RX();
+		//printf("Read from Master: %u \r\n", Read_Master_Value);
+		Delay_mS(50);
+	}
+}
+
+
+/*
+ * 		NOTES
+ *
+ 		if (toggle_State == 0){
 			// No feedback. Manually triggers commutational steps through manual delay
 			Open_Loop();
 		}
@@ -57,9 +75,5 @@ int main(void){
 			// Uses feedback from back EMF to trigger commutational steps
 	        Closed_Loop();
 		}
-	}
-}
-
-
-
+ */
 
