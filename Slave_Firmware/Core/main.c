@@ -27,7 +27,7 @@
 #include "Communication/SPI_Config.h"
 
 /*
- *  Branch
+ *  Slave
  */
 
 int main(void){
