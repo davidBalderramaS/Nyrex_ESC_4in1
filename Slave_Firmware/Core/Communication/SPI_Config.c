@@ -55,7 +55,7 @@ void SPI2_Slave_TX_RX(void){
 	if (SPI2->SR & SPI_SR_RXNE){
 		// Read data
 		Read_Master_Value = *((__IO uint8_t*)&SPI2->DR);
-		//printf("Read from Master: %u \r\n", Read_Master_Value);
+		printf("Read from Master: %u \r\n", Read_Master_Value);
 
 		// Send dummy data back (optional)
 		*((__IO uint8_t*)&SPI2->DR) = 0xFF; // 0x00, 0x15

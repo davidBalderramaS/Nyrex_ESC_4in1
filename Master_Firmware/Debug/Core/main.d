@@ -31,7 +31,8 @@ Core/main.o: ../Core/main.c \
  ../Core/ESC_Control/OpenLoop_Config.h \
  ../Core/ESC_Control/../Sensor_Handling/ADC.h \
  ../Core/ESC_Control/COMP_Loop_Config.h ../Core/Utils/Delay_Timer.h \
- ../Core/Utils/Utils.h ../Core/Communication/SPI_Config.h
+ ../Core/Utils/Utils.h ../Core/Communication/SPI_Config.h \
+ ../Core/Control_System/Control_Algoriths.h
 ../Drivers/CMSIS/Device/ST/STM32G4xx/Include/stm32g4xx.h:
 ../Drivers/CMSIS/Device/ST/STM32G4xx/Include/stm32g431xx.h:
 ../Drivers/CMSIS/Include/core_cm4.h:
@@ -68,3 +69,4 @@ Core/main.o: ../Core/main.c \
 ../Core/Utils/Delay_Timer.h:
 ../Core/Utils/Utils.h:
 ../Core/Communication/SPI_Config.h:
+../Core/Control_System/Control_Algoriths.h:

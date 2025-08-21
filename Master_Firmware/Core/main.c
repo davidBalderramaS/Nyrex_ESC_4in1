@@ -25,6 +25,7 @@
 #include "Utils/Delay_Timer.h"
 #include "Utils/Utils.h"
 #include "Communication/SPI_Config.h"
+#include "Control_System/Control_Algoriths.h"
 
 /*
  *       Master
@@ -62,26 +63,15 @@ int main(void){
 		GPIOB->ODR &= ~SPI2_PB12_MASTER_CS; // Enable CS for slave1
 		Delay_mS(1);
 
-		Read_Slave_Value = SPI2_TX_RX(ADC_Truncate(ADC_Value_PA7)); // Send (Max == 2^8 == 255) and store read value
+		Read_Slave_Value = SPI2_TX_RX(Throttle_Algo(ADC_Truncate(ADC_Value_PA7))); // Send (Max == 2^8 == 255) and store read value
+		//Read_Slave_Value = SPI2_TX_RX(140);
 		//Delay_mS(1); // Hold time
 
 		GPIOB->ODR |= SPI2_PB12_MASTER_CS;  // Disable  CS
-		printf("Read from Slave: %u \r\n", Read_Slave_Value);
-		Delay_mS(100);
+		//printf("Read from Slave: %u \r\n", Read_Slave_Value);
+		Delay_mS(1);
 	}
 }
 
 
-/*
- * 		NOTES
- *
- 		if (toggle_State == 0){
-			// No feedback. Manually triggers commutational steps through manual delay
-			Open_Loop();
-		}
-		else if (toggle_State == 1){
-			// Uses feedback from back EMF to trigger commutational steps
-	        Closed_Loop();
-		}
- */
 

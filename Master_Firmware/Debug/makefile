@@ -15,6 +15,7 @@ RM := rm -rf
 -include Core/Sensor_Handling/subdir.mk
 -include Core/Inc/subdir.mk
 -include Core/ESC_Control/subdir.mk
+-include Core/Control_System/subdir.mk
 -include Core/Communication/subdir.mk
 -include Core/Back_EMF/subdir.mk
 -include Core/subdir.mk

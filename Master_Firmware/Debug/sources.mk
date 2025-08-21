@@ -24,6 +24,7 @@ C_DEPS :=
 SUBDIRS := \
 Core/Back_EMF \
 Core/Communication \
+Core/Control_System \
 Core/ESC_Control \
 Core/Inc \
 Core/Sensor_Handling \

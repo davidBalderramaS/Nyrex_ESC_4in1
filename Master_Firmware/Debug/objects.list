@@ -2,6 +2,7 @@
 "./Core/Communication/SPI_Config.o"
 "./Core/Communication/USART1_RX.o"
 "./Core/Communication/USART_printf.o"
+"./Core/Control_System/Control_Algoriths.o"
 "./Core/ESC_Control/COMP_Loop_Config.o"
 "./Core/ESC_Control/OpenLoop_Config.o"
 "./Core/ESC_Control/PWM_To_Drivers.o"

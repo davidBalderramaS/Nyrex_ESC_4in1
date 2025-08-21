@@ -33,7 +33,7 @@
 int main(void){
 	LED_PA10_Init();
 	USART2_PA2_Init();        // PA2 == COMP2_INM
-	ADC_Poten_PA7_Init();     // TIMER3
+	//ADC_Poten_PA7_Init();     // TIMER3
 	Delay_TIM17_Init();       // Delay_mS()
 
 	COMP1_Init();             // PA1+ | PA4-  -> P1
@@ -56,23 +56,28 @@ int main(void){
 
 	while (1){
 		// Send and receive data
-		SPI2_Slave_TX_RX();
-		printf("Read from Master: %u \r\n", Read_Master_Value);
-		Delay_mS(50);
-	}
-}
+		//SPI2_Slave_TX_RX();
+		//ADC_Value_PA7 = Read_Master_Value;
+		//Set_DutyCycle_PB6_TIM4_CH1(ADC_Value_PA7); // M1H
 
-
-/*
- * 		NOTES
- *
  		if (toggle_State == 0){
+ 			// Send and receive data
+ 			SPI2_Slave_TX_RX();
+ 			ADC_Value_PA7 = Read_Master_Value;
+
 			// No feedback. Manually triggers commutational steps through manual delay
 			Open_Loop();
 		}
 		else if (toggle_State == 1){
+			// Send and receive data
+			SPI2_Slave_TX_RX();
+			ADC_Value_PA7 = Read_Master_Value;
+
 			// Uses feedback from back EMF to trigger commutational steps
 	        Closed_Loop();
 		}
- */
+	}
+}
+
+
 

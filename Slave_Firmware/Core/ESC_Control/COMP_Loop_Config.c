@@ -41,8 +41,8 @@ void Closed_Loop(void){
 			// Cycle 1 -> PhaseA -> High side ON
 			//            PhaseB -> low side ON
 			//            PhaseC -> FLOATING
-			Set_DutyCycle_PB6_TIM4_CH1(ADC_Truncate(ADC_Value_PA7)); // M1H
-			Set_DutyCycle_PB7_TIM4_CH2(ADC_Truncate(ADC_Value_PA7)); // M2L
+			Set_DutyCycle_PB6_TIM4_CH1(ADC_Value_PA7); // M1H
+			Set_DutyCycle_PB7_TIM4_CH2(ADC_Value_PA7); // M2L
 
 			Set_DutyCycle_PB3_TIM2_CH2(COMP_FLOATING);  // M1L
 			Set_DutyCycle_PA15_TIM2_CH1(COMP_FLOATING); // M2H
@@ -61,8 +61,8 @@ void Closed_Loop(void){
 			// Cycle 2 -> PhaseA -> High side ON
 			//            PhaseB -> FLOATING
 			//            PhaseC -> low side ON
-			Set_DutyCycle_PB6_TIM4_CH1(ADC_Truncate(ADC_Value_PA7));  // M1H
-			Set_DutyCycle_PC3_TIM1_CH4(ADC_Truncate(ADC_Value_PA7));  // M3L
+			Set_DutyCycle_PB6_TIM4_CH1(ADC_Value_PA7);  // M1H
+			Set_DutyCycle_PC3_TIM1_CH4(ADC_Value_PA7);  // M3L
 
 			Set_DutyCycle_PB3_TIM2_CH2(COMP_FLOATING);  // M1L
 			Set_DutyCycle_PA15_TIM2_CH1(COMP_FLOATING); // M2H
@@ -81,8 +81,8 @@ void Closed_Loop(void){
 			// Cycle 3 -> PhaseA -> FLOATING
 			//            PhaseB -> High side ON
 			//            PhaseC -> low side ON
-			Set_DutyCycle_PA15_TIM2_CH1(ADC_Truncate(ADC_Value_PA7)); // M2H
-			Set_DutyCycle_PC3_TIM1_CH4(ADC_Truncate(ADC_Value_PA7));  // M3L
+			Set_DutyCycle_PA15_TIM2_CH1(ADC_Value_PA7); // M2H
+			Set_DutyCycle_PC3_TIM1_CH4(ADC_Value_PA7);  // M3L
 
 			Set_DutyCycle_PB6_TIM4_CH1(COMP_FLOATING);  // M1H
 			Set_DutyCycle_PB3_TIM2_CH2(COMP_FLOATING);  // M1L
@@ -101,8 +101,8 @@ void Closed_Loop(void){
 			// Cycle 4 -> PhaseA -> Low side ON
 			//            PhaseB -> High side ON
 			//            PhaseC -> FLOATING
-			Set_DutyCycle_PA15_TIM2_CH1(ADC_Truncate(ADC_Value_PA7)); // M2H
-			Set_DutyCycle_PB3_TIM2_CH2(ADC_Truncate(ADC_Value_PA7));  // M1L
+			Set_DutyCycle_PA15_TIM2_CH1(ADC_Value_PA7); // M2H
+			Set_DutyCycle_PB3_TIM2_CH2(ADC_Value_PA7);  // M1L
 
 			Set_DutyCycle_PB6_TIM4_CH1(COMP_FLOATING);  // M1H
 			Set_DutyCycle_PB7_TIM4_CH2(COMP_FLOATING);  // M2L
@@ -121,8 +121,8 @@ void Closed_Loop(void){
 			// Cycle 5 -> PhaseA -> Low side ON
 			//            PhaseB -> FLOATING
 			//            PhaseC -> High side ON
-			Set_DutyCycle_PC2_TIM1_CH3(ADC_Truncate(ADC_Value_PA7));  // M3H
-			Set_DutyCycle_PB3_TIM2_CH2(ADC_Truncate(ADC_Value_PA7));  // M1L
+			Set_DutyCycle_PC2_TIM1_CH3(ADC_Value_PA7);  // M3H
+			Set_DutyCycle_PB3_TIM2_CH2(ADC_Value_PA7);  // M1L
 
 			Set_DutyCycle_PB6_TIM4_CH1(COMP_FLOATING);  // M1H
 			Set_DutyCycle_PA15_TIM2_CH1(COMP_FLOATING); // M2H
@@ -142,8 +142,8 @@ void Closed_Loop(void){
 			// Cycle 6 -> PhaseA -> FLOATING
 			//            PhaseB -> LOW side ON
 			//            PhaseC -> High side ON
-			Set_DutyCycle_PC2_TIM1_CH3(ADC_Truncate(ADC_Value_PA7));  // M3H
-			Set_DutyCycle_PB7_TIM4_CH2(ADC_Truncate(ADC_Value_PA7));  // M2L
+			Set_DutyCycle_PC2_TIM1_CH3(ADC_Value_PA7);  // M3H
+			Set_DutyCycle_PB7_TIM4_CH2(ADC_Value_PA7);  // M2L
 
 			Set_DutyCycle_PB6_TIM4_CH1(COMP_FLOATING);  // M1H
 			Set_DutyCycle_PB3_TIM2_CH2(COMP_FLOATING);  // M1L
