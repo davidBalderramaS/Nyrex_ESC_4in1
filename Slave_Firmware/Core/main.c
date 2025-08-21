@@ -57,7 +57,7 @@ int main(void){
 	while (1){
 		// Send and receive data
 		SPI2_Slave_TX_RX();
-		//printf("Read from Master: %u \r\n", Read_Master_Value);
+		printf("Read from Master: %u \r\n", Read_Master_Value);
 		Delay_mS(50);
 	}
 }

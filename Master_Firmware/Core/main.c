@@ -56,13 +56,13 @@ int main(void){
 
 	while (1){
 		// Active LED
-		GPIOA->ODR ^= LED_PA10;
+		//GPIOA->ODR ^= LED_PA10;
 
 		// Send SPI data
 		GPIOB->ODR &= ~SPI2_PB12_MASTER_CS; // Enable CS for slave1
 		Delay_mS(1);
 
-		Read_Slave_Value = SPI2_TX_RX(99); // Send (Max is 8 bits right now), store read value
+		Read_Slave_Value = SPI2_TX_RX(ADC_Truncate(ADC_Value_PA7)); // Send (Max == 2^8 == 255) and store read value
 		//Delay_mS(1); // Hold time
 
 		GPIOB->ODR |= SPI2_PB12_MASTER_CS;  // Disable  CS
