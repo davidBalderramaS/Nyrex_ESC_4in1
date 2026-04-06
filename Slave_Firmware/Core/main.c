@@ -30,6 +30,8 @@
  *  Slave
  */
 
+// testing branch 123
+
 int main(void){
 	LED_PA10_Init();
 	USART2_PA2_Init();        // PA2 == COMP2_INM
