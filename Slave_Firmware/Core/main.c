@@ -30,7 +30,6 @@
  *  Slave
  */
 
-// testing branch 123
 
 int main(void){
 	LED_PA10_Init();
@@ -59,30 +58,19 @@ int main(void){
 	}
 
 	while (1){
-		// Send and receive data
-		//SPI2_Slave_TX_RX();
-		//ADC_Value_PA7 = Read_Master_Value;
-		//Set_DutyCycle_PB6_TIM4_CH1(ADC_Value_PA7); // M1H
-	//	printf("%d \n\r",ADC_Truncate(ADC_Value_PA7));
-		//Delay_mS(333);
-		///*
+		// No feedback. Manually triggers commutational steps through manual delay
  		if (toggle_State == 0){
- 			// Send and receive data
- 			//SPI2_Slave_TX_RX();
- 			//ADC_Value_PA7 = Read_Master_Value;
-
-			// No feedback. Manually triggers commutational steps through manual delay
 			Open_Loop();
 		}
+ 		// Uses feedback from back EMF to trigger commutational steps
 		else if (toggle_State == 1){
 			// Send and receive data
-			//SPI2_Slave_TX_RX();
-			//ADC_Value_PA7 = Read_Master_Value;
+			SPI2_Slave_TX_RX();
 
-			// Uses feedback from back EMF to trigger commutational steps
+			ADC_Value_PA7 = Read_Master_Value;
+
 	        Closed_Loop();
 		}
-		//*/
 	}
 }
 
