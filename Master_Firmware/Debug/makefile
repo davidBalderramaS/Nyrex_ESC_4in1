@@ -13,6 +13,7 @@ RM := rm -rf
 -include Core/Utils/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Sensor_Handling/subdir.mk
+-include Core/NRF24L01/subdir.mk
 -include Core/Inc/subdir.mk
 -include Core/ESC_Control/subdir.mk
 -include Core/Control_System/subdir.mk

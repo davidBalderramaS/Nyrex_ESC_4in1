@@ -80,6 +80,15 @@ uint8_t SPI2_TX_RX(uint8_t data){
     return *((__IO uint8_t*)&SPI2->DR);
 }
 
+// Send a pointer to a buffer plus a size -> NRF24
+void SPI2_TX_Buffer(uint8_t *data, uint8_t size){
+    for(uint8_t i = 0; i < size; i++){
+        SPI2_TX_RX(data[i]);
+    }
+}
 
-
-
+void SPI2_RX_Buffer(uint8_t *data, uint16_t size){
+    for(uint16_t i = 0; i < size; i++){
+        data[i] = SPI2_TX_RX(0xFF);
+    }
+}

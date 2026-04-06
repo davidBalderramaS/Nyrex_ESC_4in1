@@ -27,6 +27,7 @@ Core/Communication \
 Core/Control_System \
 Core/ESC_Control \
 Core/Inc \
+Core/NRF24L01 \
 Core/Sensor_Handling \
 Core/Startup \
 Core/Utils \

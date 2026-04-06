@@ -1,2 +1,4 @@
 ../Core/Communication/SPI_Config.c:24:6:SPI2_Master_Init	4	static
 ../Core/Communication/SPI_Config.c:58:9:SPI2_TX_RX	24	static
+../Core/Communication/SPI_Config.c:84:6:SPI2_TX_Buffer	24	static
+../Core/Communication/SPI_Config.c:90:6:SPI2_RX_Buffer	32	static
