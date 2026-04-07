@@ -13,6 +13,7 @@
 extern uint8_t Read_Slave_Value;
 
 void SPI2_Master_Init(void);
+
 uint8_t SPI2_TX_RX(uint8_t data);
 void SPI2_TX_Buffer(uint8_t *data, uint8_t size);
 

@@ -15,6 +15,7 @@
 #include "stm32g431xx.h"
 #include <stdio.h>
 #include <math.h>
+#include <string.h>
 
 #include "Back_EMF/COMPx.h"
 #include "Sensor_Handling/ADC.h"
@@ -26,10 +27,24 @@
 #include "Utils/Utils.h"
 #include "Communication/SPI_Config.h"
 #include "Control_System/Control_Algoriths.h"
+#include "NRF24L01/NRF24.h"
+#include "NRF24L01/NRF24_reg_addresses.h"
 
+#define PLD_SIZE 32
+#define tx
 /*
  *       Master
  */
+
+// Stuff for NRF24 idk
+#ifdef tx
+uint8_t data_T[PLD_SIZE] = {"Hello !"};
+uint8_t ack_T[PLD_SIZE];
+#else
+uint8_t data_R[PLD_SIZE];
+uint8_t ack_R[PLD_SIZE] = {"Received"};
+#endif
+
 
 int main(void){
 	LED_PA10_Init();
@@ -55,7 +70,41 @@ int main(void){
 		__enable_irq();
 	}
 
+	// NRF24 Init
+	csn_high();
+	nrf24_init();
+	nrf24_tx_pwr(_0dbm);
+	nrf24_data_rate(_1mbps);
+	nrf24_set_channel(78);
+	nrf24_pipe_pld_size(0,PLD_SIZE);
+	uint8_t addr[5] = { 0x10, 0x21, 0x32, 0x43, 0x54};
+	nrf24_open_tx_pipe(addr);
+	nrf24_open_rx_pipe(0,addr);
+
+#ifdef tx
+	nrf24_stop_listen();
+#else
+	nrf24_listen();
+#endif
+
 	while (1){
+#ifdef tx
+		nrf24_transmit(data_T, sizeof(data_T));
+		Delay_mS(1);
+#else
+		nrf24_listen();
+
+		if(nrf24_data_available()){
+			nrf24_receive(data_R, sizeof(data_R));
+		}
+
+		char tmp[40];
+		sprintf(tmp, " %s \n\r", data_R);
+		SPI2_TX_RX(tmp);
+		SPI2_TX_Buffer(strlen(tmp), 200); // send all data bytes
+		Delay_mS(1);
+#endif
+		/*
 		// Active LED
 		//GPIOA->ODR ^= LED_PA10;
 
@@ -69,6 +118,7 @@ int main(void){
 
 		GPIOB->ODR |= SPI2_PB12_MASTER_CS;  // Disable  CS
 		Delay_mS(1);
+		*/
 	}
 }
 
