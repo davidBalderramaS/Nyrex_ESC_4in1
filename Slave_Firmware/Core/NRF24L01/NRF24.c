@@ -591,7 +591,30 @@ void nrf24_transmit_rx_ack_pld(uint8_t pipe, uint8_t *data, uint8_t size){
 uint8_t nrf24_carrier_detect(void){
 	return nrf24_r_reg(RPD, 1);
 }
+// IDK why i added this twice???
+/*
+uint8_t nrf24_r_status(void){
+	uint8_t data = 0;
+	uint8_t cmd = NOP_CMD;
 
+	csn_low();
+
+	//HAL_SPI_TransmitReceive(&hspiX, &cmd, &data, 1, spi_rw_timeout);  // <===
+	data = SPI2_TX_RX(cmd);
+
+	csn_high();
+
+	return data;
+}
+*/
+/*
+uint8_t nrf24_data_available(void){
+    return (nrf24_r_status() & (1 << RX_DR)) ? 1 : 0;
+}
+*/
+
+
+// 2nd - > Prints Hello twice every sec
 uint8_t nrf24_data_available(void){
 
  	uint8_t reg_dt = nrf24_r_reg(FIFO_STATUS, 1);
@@ -603,6 +626,23 @@ uint8_t nrf24_data_available(void){
 	return 0;
 }
 
+
+// 1st
+/*
+uint8_t nrf24_data_available(void){
+
+ 	uint8_t reg_dt = nrf24_r_reg(FIFO_STATUS, 1);
+
+	if(!(reg_dt & (1 << RX_EMPTY))){
+		return 1;
+	}
+
+	return 0;
+}
+*/
+
+/*
+// #1
 void nrf24_receive(uint8_t *data, uint8_t size){
 	uint8_t cmd = R_RX_PAYLOAD;
 
@@ -618,6 +658,43 @@ void nrf24_receive(uint8_t *data, uint8_t size){
 	if(!nrf24_read_bit(FIFO_STATUS, RX_EMPTY)){
 		nrf24_clear_rx_dr();
 	}
+}
+*/
+/*
+//#2 prints out hello once or twice
+void nrf24_receive(uint8_t *data, uint8_t size){
+    uint8_t cmd = R_RX_PAYLOAD;
+
+    csn_low();
+
+    SPI2_TX_RX(cmd);          // send read-payload command
+
+    for(uint8_t i = 0; i < size; i++){
+        data[i] = SPI2_TX_RX(0xFF);   // dummy write, actual read
+    }
+
+    csn_high();
+
+    if(!nrf24_read_bit(FIFO_STATUS, RX_EMPTY)){
+        nrf24_clear_rx_dr();
+    }
+}
+*/
+// #3
+void nrf24_receive(uint8_t *data, uint8_t size){
+    uint8_t cmd = R_RX_PAYLOAD;
+
+    csn_low();
+    SPI2_TX_RX(cmd);
+
+    for(uint8_t i = 0; i < size; i++){
+        data[i] = SPI2_TX_RX(0xFF);
+    }
+
+    while(SPI2->SR & SPI_SR_BSY);
+    csn_high();
+
+    nrf24_clear_rx_dr();   // clear unconditionally
 }
 
 /*

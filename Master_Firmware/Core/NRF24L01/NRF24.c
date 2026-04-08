@@ -512,7 +512,7 @@ size_t nrf24_uint8_t_to_type(uint8_t* in, uint16_t size){
 	return out;
 }
 
-
+//#1 - transmits data well with 35 mS delay
 uint8_t nrf24_transmit(uint8_t *data, uint8_t size){
 
 	ce_low();
@@ -541,6 +541,43 @@ uint8_t nrf24_transmit(uint8_t *data, uint8_t size){
 	return 0;
 }
 
+
+//2nd -> This one didnt work with 35mS delay
+/*
+
+uint8_t nrf24_transmit(uint8_t *data, uint8_t size){
+
+    ce_low();
+
+    uint8_t cmd = W_TX_PAYLOAD;
+
+    csn_low();
+    SPI2_TX_RX(cmd);
+    SPI2_TX_Buffer(data, size);
+    while(SPI2->SR & SPI_SR_BSY);
+    csn_high();
+
+    ce_high();
+    Delay_uS(20);
+    ce_low();
+
+    // Wait for TX complete or max retries
+    while(1){
+        uint8_t status = nrf24_r_status();
+
+        if(status & (1 << TX_DS)){
+            nrf24_clear_tx_ds();
+            return 0;   // success
+        }
+
+        if(status & (1 << MAX_RT)){
+            nrf24_clear_max_rt();
+            nrf24_flush_tx();
+            return 1;   // fail
+        }
+    }
+}
+*/
 uint8_t  nrf24_transmit_no_ack(uint8_t *data, uint8_t size){
 
 	ce_low();
@@ -602,6 +639,20 @@ uint8_t nrf24_data_available(void){
 
 	return 0;
 }
+
+// 1st
+/*
+uint8_t nrf24_data_available(void){
+
+ 	uint8_t reg_dt = nrf24_r_reg(FIFO_STATUS, 1);
+
+	if(!(reg_dt & (1 << RX_EMPTY))){
+		return 1;
+	}
+
+	return 0;
+}
+*/
 
 void nrf24_receive(uint8_t *data, uint8_t size){
 	uint8_t cmd = R_RX_PAYLOAD;

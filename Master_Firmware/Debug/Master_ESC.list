@@ -3318,7 +3318,7 @@ void nrf24_stop_listen(void){
 	return out;
 }
 
-
+//#1 - transmits data well with 35 mS delay
 uint8_t nrf24_transmit(uint8_t *data, uint8_t size){
  8001590:	b580      	push	{r7, lr}
  8001592:	b084      	sub	sp, #16
@@ -4130,8 +4130,8 @@ int main(void){
  8001a20:	2120      	movs	r1, #32
  8001a22:	4805      	ldr	r0, [pc, #20]	@ (8001a38 <main+0xb0>)
  8001a24:	f7ff fdb4 	bl	8001590 <nrf24_transmit>
-		Delay_mS(1);
- 8001a28:	2001      	movs	r0, #1
+		Delay_mS(35); // 1mS originally
+ 8001a28:	2023      	movs	r0, #35	@ 0x23
  8001a2a:	f7ff ff6d 	bl	8001908 <Delay_mS>
 		nrf24_transmit(data_T, sizeof(data_T));
  8001a2e:	bf00      	nop

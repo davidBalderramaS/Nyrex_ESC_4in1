@@ -76,6 +76,12 @@ int main(void){
 	// NRF24 Init
 	csn_high();
 	nrf24_init();
+
+	nrf24_flush_rx();    // Flushes out RX once at startup
+	nrf24_clear_rx_dr();
+	nrf24_clear_tx_ds();
+	nrf24_clear_max_rt();
+
 	nrf24_tx_pwr(_0dbm);
 	nrf24_data_rate(_1mbps);
 	nrf24_set_channel(78);
@@ -95,20 +101,79 @@ int main(void){
 		nrf24_transmit(data_T, sizeof(data_T));
 		Delay_mS(1);
 #else
-		nrf24_listen();
-
+		//nrf24_listen(); // <<-- this ON would print hello once or twice
+		/*
+		// 1st
 		if(nrf24_data_available()){
 			nrf24_receive(data_R, sizeof(data_R));
 			data_R[sizeof(data_R) - 1] = '\0';
 
 			printf("Received: %s\r\n", data_R);
 		}
+
+		*/
+		/*
+		// 2nd
+		if(nrf24_data_available()){
+		    memset(data_R, 0, sizeof(data_R));
+		    nrf24_receive(data_R, sizeof(data_R));
+
+		    printf("RX bytes: ");
+		    for(int i = 0; i < PLD_SIZE; i++){
+		        printf("%02X ", data_R[i]);
+		    }
+		    printf("\r\n");
+
+		    printf("First char: 0x%02X\r\n", data_R[0]);
+
+		    data_R[PLD_SIZE - 1] = '\0';
+		    printf("Received as string: %s\r\n", data_R);
+		}
+		Delay_mS(150);
+		*/
+		// 3rd
+		/*
+		printf("RX STATUS=0x%02X available=%u\r\n", nrf24_r_status(), nrf24_data_available());
+
+		if(nrf24_data_available()){
+		    memset(data_R, 0, sizeof(data_R));
+		    nrf24_receive(data_R, sizeof(data_R));
+
+		    printf("RX bytes: ");
+		    for(int i = 0; i < PLD_SIZE; i++){
+		        printf("%02X ", data_R[i]);
+		    }
+		    printf("\r\n");
+		}
+		Delay_mS(500);
+	*/
+		/*
+		// #4 - prints hello twice/sec
+		if(nrf24_data_available()){
+		    memset(data_R, 0, sizeof(data_R));
+		    nrf24_receive(data_R, sizeof(data_R));
+		    printf("Received: %s\r\n", &data_R[1]);
+		}
+
+		    Delay_mS(10);
+
+		*/
+		if(nrf24_data_available()){
+		        memset(data_R, 0, sizeof(data_R));
+		        nrf24_receive(data_R, sizeof(data_R));
+
+		        if(data_R[1] != '\0'){
+		            printf("Received: %s\r\n", &data_R[1]);
+		        }
+		    }
+
+		Delay_mS(10);
+
 		//char tmp[40];
 		//sprintf(tmp, " %s \n\r", data_R);
 		//SPI2_TX_RX(tmp);
 		//SPI2_TX_Buffer(strlen(tmp), 200); // send all data bytes
 		//SPI2_TX_Buffer((uint8_t *)tmp, strlen(tmp));
-		Delay_mS(150);
 #endif
 		/*
 		// No feedback. Manually triggers commutational steps through manual delay

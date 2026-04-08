@@ -38,7 +38,7 @@
 
 // Stuff for NRF24 idk
 #ifdef tx
-uint8_t data_T[PLD_SIZE] = {"Hello !"};
+uint8_t data_T[PLD_SIZE] = {"DAVID"};
 uint8_t ack_T[PLD_SIZE];
 #else
 uint8_t data_R[PLD_SIZE];
@@ -90,7 +90,12 @@ int main(void){
 	while (1){
 #ifdef tx
 		nrf24_transmit(data_T, sizeof(data_T));
-		Delay_mS(1);
+		Delay_mS(35); // 1mS originally
+
+		//uint8_t tx_result = nrf24_transmit(data_T, sizeof(data_T));
+		//printf("TX result = %u, STATUS = 0x%02X\r\n", tx_result, nrf24_r_status());
+		//Delay_mS(500);
+
 #else
 		nrf24_listen();
 
