@@ -31,20 +31,14 @@
 #include "NRF24L01/NRF24_reg_addresses.h"
 
 #define PLD_SIZE 32
-#define tx
+
 /*
  *       Master
  */
 
 // Stuff for NRF24 idk
-#ifdef tx
-uint8_t data_T[PLD_SIZE] = {"DAVID"};
+uint8_t data_T[PLD_SIZE] = {"Start"};
 uint8_t ack_T[PLD_SIZE];
-#else
-uint8_t data_R[PLD_SIZE];
-uint8_t ack_R[PLD_SIZE] = {"Received"};
-#endif
-
 
 int main(void){
 	LED_PA10_Init();
@@ -81,34 +75,35 @@ int main(void){
 	nrf24_open_tx_pipe(addr);
 	nrf24_open_rx_pipe(0,addr);
 
-#ifdef tx
 	nrf24_stop_listen();
-#else
-	nrf24_listen();
-#endif
 
 	while (1){
-#ifdef tx
+
+		/*
+		// #1
+		data_T[0] = (Throttle_Algo(ADC_Truncate(ADC_Value_PA7 >> 8))) & 0xFF;  // high byte
+		data_T[1] = (Throttle_Algo(ADC_Truncate(ADC_Value_PA7))) & 0xFF;         // low byte
+
 		nrf24_transmit(data_T, sizeof(data_T));
 		Delay_mS(35); // 1mS originally
+		*/
+
+		// #2
+		uint8_t throttle_value = (uint8_t)Throttle_Algo(ADC_Truncate(ADC_Value_PA7));
+	    data_T[0] = throttle_value;
+
+	    for (int i = 1; i < 32; i++)
+	     {
+	         data_T[i] = 0;
+	     }
+
+	    nrf24_transmit(data_T, sizeof(data_T));
+	    Delay_mS(35);
 
 		//uint8_t tx_result = nrf24_transmit(data_T, sizeof(data_T));
 		//printf("TX result = %u, STATUS = 0x%02X\r\n", tx_result, nrf24_r_status());
 		//Delay_mS(500);
 
-#else
-		nrf24_listen();
-
-		if(nrf24_data_available()){
-			nrf24_receive(data_R, sizeof(data_R));
-		}
-
-		char tmp[40];
-		sprintf(tmp, " %s \n\r", data_R);
-		SPI2_TX_RX(tmp);
-		SPI2_TX_Buffer(strlen(tmp), 200); // send all data bytes
-		Delay_mS(1);
-#endif
 		/*
 		// Active LED
 		//GPIOA->ODR ^= LED_PA10;

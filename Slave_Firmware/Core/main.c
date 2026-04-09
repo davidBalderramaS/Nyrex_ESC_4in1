@@ -31,16 +31,11 @@
 #include "NRF24L01/NRF24_reg_addresses.h"
 
 #define PLD_SIZE 32
-//#define tx // For rx (Slave), comment out this
 
 // Stuff for NRF24 idk
-#ifdef tx
-uint8_t data_T[PLD_SIZE] = {"Hello !"};
-uint8_t ack_T[PLD_SIZE];
-#else
+
 uint8_t data_R[PLD_SIZE];
 uint8_t ack_R[PLD_SIZE] = {"Received"};
-#endif
 
 /*
  *  Slave
@@ -90,17 +85,11 @@ int main(void){
 	nrf24_open_tx_pipe(addr);
 	nrf24_open_rx_pipe(0,addr);
 
-#ifdef tx
-	nrf24_stop_listen();
-#else
+
 	nrf24_listen();
-#endif
+
 
 	while (1){
-#ifdef tx
-		nrf24_transmit(data_T, sizeof(data_T));
-		Delay_mS(1);
-#else
 		//nrf24_listen(); // <<-- this ON would print hello once or twice
 		/*
 		// 1st
@@ -158,23 +147,36 @@ int main(void){
 		    Delay_mS(10);
 
 		*/
+		// 4th - Current... printing work for a bit then stops
+
 		if(nrf24_data_available()){
 		        memset(data_R, 0, sizeof(data_R));
 		        nrf24_receive(data_R, sizeof(data_R));
 
 		        if(data_R[1] != '\0'){
-		            printf("Received: %s\r\n", &data_R[1]);
+		            //printf("Received: %s\r\n", &data_R[1]);
+		        	printf("Received: %u\r\n", data_R[1]);
 		        }
 		    }
 
 		Delay_mS(10);
 
+		/*
+	    if(nrf24_data_available()){
+	       // memset(data_R, 0, sizeof(data_R));
+	        nrf24_receive(data_R, sizeof(data_R));
+
+	        printf("Received: %u\r\n", (unsigned int)data_R[0]);
+	    }
+
+	    Delay_mS(10);
+	*/
 		//char tmp[40];
 		//sprintf(tmp, " %s \n\r", data_R);
 		//SPI2_TX_RX(tmp);
 		//SPI2_TX_Buffer(strlen(tmp), 200); // send all data bytes
 		//SPI2_TX_Buffer((uint8_t *)tmp, strlen(tmp));
-#endif
+
 		/*
 		// No feedback. Manually triggers commutational steps through manual delay
  		if (toggle_State == 0){
