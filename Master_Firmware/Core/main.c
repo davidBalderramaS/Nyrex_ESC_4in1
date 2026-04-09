@@ -78,18 +78,8 @@ int main(void){
 	nrf24_stop_listen();
 
 	while (1){
-
-		/*
-		// #1
-		data_T[0] = (Throttle_Algo(ADC_Truncate(ADC_Value_PA7 >> 8))) & 0xFF;  // high byte
-		data_T[1] = (Throttle_Algo(ADC_Truncate(ADC_Value_PA7))) & 0xFF;         // low byte
-
-		nrf24_transmit(data_T, sizeof(data_T));
-		Delay_mS(35); // 1mS originally
-		*/
-
-		// #2
-		uint8_t throttle_value = (uint8_t)Throttle_Algo(ADC_Truncate(ADC_Value_PA7));
+		//uint8_t throttle_value = (uint8_t)Throttle_Algo(ADC_Truncate(ADC_Value_PA7));
+		uint8_t throttle_value = (uint8_t)(ADC_Truncate(ADC_Value_PA7));
 	    data_T[0] = throttle_value;
 
 	    for (int i = 1; i < 32; i++)
@@ -97,28 +87,10 @@ int main(void){
 	         data_T[i] = 0;
 	     }
 
+	   // printf("%u \r\n", throttle_value);
+
 	    nrf24_transmit(data_T, sizeof(data_T));
 	    Delay_mS(35);
-
-		//uint8_t tx_result = nrf24_transmit(data_T, sizeof(data_T));
-		//printf("TX result = %u, STATUS = 0x%02X\r\n", tx_result, nrf24_r_status());
-		//Delay_mS(500);
-
-		/*
-		// Active LED
-		//GPIOA->ODR ^= LED_PA10;
-
-		// Send SPI data
-		GPIOB->ODR &= ~SPI2_PB12_MASTER_CS; // Enable CS for slave1
-		Delay_mS(1);
-
-		// Send (Max == 2^8 == 255) and store read value
-		Read_Slave_Value = SPI2_TX_RX(Throttle_Algo(ADC_Truncate(ADC_Value_PA7)));
-		Delay_mS(1); // Hold time
-
-		GPIOB->ODR |= SPI2_PB12_MASTER_CS;  // Disable  CS
-		Delay_mS(1);
-		*/
 	}
 }
 

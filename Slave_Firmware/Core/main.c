@@ -85,99 +85,16 @@ int main(void){
 	nrf24_open_tx_pipe(addr);
 	nrf24_open_rx_pipe(0,addr);
 
-
 	nrf24_listen();
 
-
 	while (1){
-		//nrf24_listen(); // <<-- this ON would print hello once or twice
-		/*
-		// 1st
-		if(nrf24_data_available()){
-			nrf24_receive(data_R, sizeof(data_R));
-			data_R[sizeof(data_R) - 1] = '\0';
-
-			printf("Received: %s\r\n", data_R);
-		}
-
-		*/
-		/*
-		// 2nd
-		if(nrf24_data_available()){
-		    memset(data_R, 0, sizeof(data_R));
-		    nrf24_receive(data_R, sizeof(data_R));
-
-		    printf("RX bytes: ");
-		    for(int i = 0; i < PLD_SIZE; i++){
-		        printf("%02X ", data_R[i]);
-		    }
-		    printf("\r\n");
-
-		    printf("First char: 0x%02X\r\n", data_R[0]);
-
-		    data_R[PLD_SIZE - 1] = '\0';
-		    printf("Received as string: %s\r\n", data_R);
-		}
-		Delay_mS(150);
-		*/
-		// 3rd
-		/*
-		printf("RX STATUS=0x%02X available=%u\r\n", nrf24_r_status(), nrf24_data_available());
-
-		if(nrf24_data_available()){
-		    memset(data_R, 0, sizeof(data_R));
-		    nrf24_receive(data_R, sizeof(data_R));
-
-		    printf("RX bytes: ");
-		    for(int i = 0; i < PLD_SIZE; i++){
-		        printf("%02X ", data_R[i]);
-		    }
-		    printf("\r\n");
-		}
-		Delay_mS(500);
-	*/
-		/*
-		// #4 - prints hello twice/sec
-		if(nrf24_data_available()){
-		    memset(data_R, 0, sizeof(data_R));
-		    nrf24_receive(data_R, sizeof(data_R));
-		    printf("Received: %s\r\n", &data_R[1]);
-		}
-
-		    Delay_mS(10);
-
-		*/
-		// 4th - Current... printing work for a bit then stops
-
-		if(nrf24_data_available()){
-		        memset(data_R, 0, sizeof(data_R));
-		        nrf24_receive(data_R, sizeof(data_R));
-
-		        if(data_R[1] != '\0'){
-		            //printf("Received: %s\r\n", &data_R[1]);
-		        	printf("Received: %u\r\n", data_R[1]);
-		        }
-		    }
-
-		Delay_mS(10);
-
-		/*
-	    if(nrf24_data_available()){
-	       // memset(data_R, 0, sizeof(data_R));
-	        nrf24_receive(data_R, sizeof(data_R));
-
-	        printf("Received: %u\r\n", (unsigned int)data_R[0]);
-	    }
-
-	    Delay_mS(10);
-	*/
 		//char tmp[40];
 		//sprintf(tmp, " %s \n\r", data_R);
 		//SPI2_TX_RX(tmp);
 		//SPI2_TX_Buffer(strlen(tmp), 200); // send all data bytes
 		//SPI2_TX_Buffer((uint8_t *)tmp, strlen(tmp));
 
-		/*
+
 		// No feedback. Manually triggers commutational steps through manual delay
  		if (toggle_State == 0){
 			Open_Loop();
@@ -185,13 +102,24 @@ int main(void){
  		// Uses feedback from back EMF to trigger commutational steps
 		else if (toggle_State == 1){
 			// Send and receive data
-			SPI2_Slave_TX_RX();
+			//SPI2_Slave_TX_RX();
+			//ADC_Value_PA7 = Read_Master_Value;
 
-			ADC_Value_PA7 = Read_Master_Value;
+			if(nrf24_data_available()){
+			    memset(data_R, 0, sizeof(data_R));
+				nrf24_receive(data_R, sizeof(data_R));
+
+			    if(data_R[1] != '\0'){
+			    	//printf("%u \r\n", data_R[1]);
+			    	ADC_Value_PA7 = data_R[1];
+			        //printf("%u\r\n", ADC_Value_PA7);
+			        //Delay_mS(100);
+			    }
+			}
+			//Delay_mS(10);
 
 	        Closed_Loop();
 		}
-		*/
 	}
 }
 

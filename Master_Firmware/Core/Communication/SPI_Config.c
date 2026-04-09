@@ -92,3 +92,30 @@ void SPI2_RX_Buffer(uint8_t *data, uint16_t size){
         data[i] = SPI2_TX_RX(0xFF);
     }
 }
+
+// Code for serial SPI
+/*
+main(){
+	while(){
+		//uint8_t tx_result = nrf24_transmit(data_T, sizeof(data_T));
+		//printf("TX result = %u, STATUS = 0x%02X\r\n", tx_result, nrf24_r_status());
+		//Delay_mS(500);
+
+		/*
+		// Active LED
+		//GPIOA->ODR ^= LED_PA10;
+
+		// Send SPI data
+		GPIOB->ODR &= ~SPI2_PB12_MASTER_CS; // Enable CS for slave1
+		Delay_mS(1);
+
+		// Send (Max == 2^8 == 255) and store read value
+		Read_Slave_Value = SPI2_TX_RX(Throttle_Algo(ADC_Truncate(ADC_Value_PA7)));
+		Delay_mS(1); // Hold time
+
+		GPIOB->ODR |= SPI2_PB12_MASTER_CS;  // Disable  CS
+		Delay_mS(1);
+		*/
+	}
+}
+*/
